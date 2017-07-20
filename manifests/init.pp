@@ -42,7 +42,26 @@
 #
 # Copyright 2017 Your name here, unless otherwise noted.
 #
-class jemkins {
+class jenkins {
+  yumrepo { 'jenkins':
+    ensure   => 'present',
+    baseurl  => 'http://pkg.jenkins.io/redhat',
+    descr    => 'Jenkins',
+    gpgcheck => '1',
+  }
+->
+  package { 'java-1.8.0':
+    ensure => 'latest',
+  }
+-> 
+  package { 'jenkins':
+    ensure => 'latest',
+  }
+-> 
+  service { 'jenkins':
+    ensure => 'running',
+    enable => 'true',
+  }
 
-
+  # Yumrepo{'jenkins'} -> package{'java-1.8.0'} -> Package{'jenkins'} -> Service{'jenkins'}
 }
